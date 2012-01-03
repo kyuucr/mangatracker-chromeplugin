@@ -1,0 +1,24 @@
+#trakk3r-l8n11-menu{
+	position: absolute;
+	left:10px;
+	top:10px;
+	padding:10px;
+}
+
+#trakk3r-l8n11-rule-option,#trakk3r-l8n11-config-option{
+	width:50px;
+	text-align: center;
+	height:50px;
+	line-height: 50px;
+	background-color:red;
+	display: inline-block;
+}
+
+#trakk3r-l8n11-rule_view{
+		width:200px;
+		height:200px;
+		background-color:purple;
+		cursor: 
+}
+
+

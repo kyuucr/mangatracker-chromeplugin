@@ -1,0 +1,21 @@
+{
+  "name": "aaa",
+  "version": "1.0",
+  "background_page": "background.html",
+  "options_page": "api-key.html",
+  
+  "browser_action" : {
+    "default_icon": "icon.png"
+  },
+  
+    "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "js": ["jquery.js", "myscript.js"],
+      "css": ["css.css"]
+    }
+  ],
+  "permissions": ["tabs", "http://*/*", "*", "http://localhost:9000/*"]
+}
+

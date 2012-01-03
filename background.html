@@ -1,0 +1,57 @@
+<html>
+<head> 
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+
+
+
+chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {
+	if(request.data["manga_name"] && request.data["chapter.issue"]){
+	console.log(request.data);
+		request.data["api_key"] = localStorage["apikey"];
+		if(localStorage["apikey"]){
+			$.post("http://localhost:9000/addmanga", jQuery.param( request.data ),
+				function(data){
+					sendResponse({completed:true});
+					console.log(data);
+				}
+			, "json");
+		}
+	}
+});
+
+
+function focusOrCreateTab(url) {
+  chrome.windows.getAll({"populate":true}, function(windows) {
+    var existing_tab = null;
+    for (var i in windows) {
+      var tabs = windows[i].tabs;
+      for (var j in tabs) {
+        var tab = tabs[j];
+        if (tab.url == url) {
+          existing_tab = tab;
+          break;
+        }
+      }
+    }
+    if (existing_tab) {
+      chrome.tabs.update(existing_tab.id, {"selected":true});
+    } else {
+      chrome.tabs.create({"url":url, "selected":true});
+    }
+  });
+}
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+
+
+  var manager_url = chrome.extension.getURL("api-key.html");
+  
+  focusOrCreateTab(manager_url);
+});
+
+
+</script>
+</head>
+</html>
+

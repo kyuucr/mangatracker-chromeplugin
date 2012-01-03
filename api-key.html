@@ -1,0 +1,124 @@
+<html>
+	<head>
+		<script type="text/javascript" src="jquery.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Inder' rel='stylesheet' type='text/css' />
+		<style type="text/css">
+		#manager_view{
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(91%,#e0e0e0), color-stop(91%,#d6d6d6), color-stop(100%,#d6d6d6)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, #eeeeee 0%,#e0e0e0 91%,#d6d6d6 91%,#d6d6d6 100%); /* Chrome10+,Safari5.1+ */
+			background: linear-gradient(top, #eeeeee 0%,#e0e0e0 91%,#d6d6d6 91%,#d6d6d6 100%); /* W3C */
+			width:550px;
+			height:300px;
+			margin:100px auto;
+			padding:30px;
+			box-shadow:0px 0px 6px rgba(0,0,0,0.5);
+			font-family: 'Inder', sans-serif;
+			border-radius:2px;
+			
+		}
+		
+		#add_key{
+			text-align: center;
+		}
+		
+		 h2{
+		 	font-weight: 500;
+		 	color:#333;
+		 	text-align: center;
+		 }
+		 
+		 input[type="text"]{
+		 	padding:2px;
+			font-family: 'Inder', sans-serif;
+			color:#333;
+			border:none;
+			box-shadow:1px 1px 1px rgba(0,0,0,0.2) inset;
+			font-size: 20px;
+			border-radius:2px;
+			
+		 }
+		 
+		 input[type="text"]::-webkit-input-placeholder{
+			font-weight: 400;
+		 }		
+				 
+		 button{
+		 	border: 1px solid white;
+		 	padding:5px 10px;
+		 	font-size: 20px;
+		 	color:#333;
+		 	border-radius:5px;
+		 	border:none;
+		 	cursor:pointer;
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.32))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.32) 100%); /* Chrome10+,Safari5.1+ */
+			background: linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0.32) 100%); /* W3C */
+
+		 }
+		 
+		 #add_api_key_input{
+		 	width:100%;
+		 }
+		</style> 
+	</head>
+
+	<body>
+		<div id="manager_view" >
+			<div id="add_key">
+				<div id="enter_and_check_api_key">
+					<h2 class="if_not_key" style="display:none">Enter your Api-key from <a href="#">xsite</a> to get started</h2>
+					<h2 class="if_key" style="display:none">Enter new Api-key</h2>
+					<input placeholder="Enter api key here..." type="text" id="add_api_key_input"/><br/>
+					<button id="check_apikey_button">Add api key</button>
+				</div>
+			</div>
+			<div id="valid_api_key">
+				<span></span>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			if(localStorage["apikey"]){
+				$("#add_api_key_input").val(localStorage["apikey"])
+			}
+			if(localStorage["apikey"]){
+				check_api_key($("#add_api_key_input").val());
+				$(".if_not_key").hide();
+				$(".if_key").show();
+			} else {
+				$(".if_key").hide();
+				$(".if_not_key").show();
+			}
+			
+			$("#check_apikey_button").click(function(){
+				check_api_key($("#add_api_key_input").val());
+			});
+			
+			$("#renew_api_key").live("click",function(){
+				$("#enter_and_check_api_key").show();
+				$("#valid_api_key span").html("");
+			});
+						
+			function check_api_key(key){
+				if(key){
+					$.post("http://localhost:9000/checkapikey", jQuery.param( {api_key:key} ),
+				 		function(user){
+							if(!user.accepted && user.api_key == key){
+								window.accepted_user = user;
+								localStorage["apikey"] = user.api_key;
+								$("#enter_and_check_api_key").hide();
+								$("#valid_api_key span").html("Api key valid, thank you " + user.name + ", you can now start reading and tracking manga. click <a href='#' id='renew_api_key'> here </a>to add a new api key.");
+							}else if(user.accepted == "false"){
+								$("#valid_api_key span").html("Api key not valid");
+							}
+				 		}
+						, 
+					"json");
+				}
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>
