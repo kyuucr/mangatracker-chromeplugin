@@ -1,10 +1,15 @@
 
 if(window.location.host.indexOf("somemanga") != -1){
-	jQuery("#select_div_holder").ready(function(){
-		var manga = jQuery("#manga_select_div select").val();
-		var issue = jQuery("#issue_select_div select").val();
-		send(manga,issue);
-	})
+	$("head").ready(function(){
+		$("script").each(function(index,element){
+			if($(this).text().indexOf("manga_name=") > -1){
+				var buffer = $(this).text();
+				var manga = buffer.match(/manga_name='(.*)'/)[1];
+				var issue = buffer.match(/issue='(.*)'/)[1];
+				send(manga,issue);
+			}
+		});
+	});	
 }
 	
 if(window.location.host.indexOf("mangareader") != -1){

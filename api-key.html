@@ -1,20 +1,41 @@
 <html>
 	<head>
 		<script type="text/javascript" src="jquery.js"></script>
-		<link href='http://fonts.googleapis.com/css?family=Inder' rel='stylesheet' type='text/css' />
+
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700italic' rel='stylesheet' type='text/css'></link>
 		<style type="text/css">
-		#manager_view{
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(91%,#e0e0e0), color-stop(91%,#d6d6d6), color-stop(100%,#d6d6d6)); /* Chrome,Safari4+ */
-			background: -webkit-linear-gradient(top, #eeeeee 0%,#e0e0e0 91%,#d6d6d6 91%,#d6d6d6 100%); /* Chrome10+,Safari5.1+ */
-			background: linear-gradient(top, #eeeeee 0%,#e0e0e0 91%,#d6d6d6 91%,#d6d6d6 100%); /* W3C */
-			width:550px;
-			height:300px;
+		body {
+			font-family: 'Ubuntu', sans-serif;
+			color:#444;
+			background: rgb(242,154,14); /* Old browsers */
+			background: -moz-linear-gradient(top, rgba(242,154,14,1) 0%, rgba(255,103,15,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(242,154,14,1)), color-stop(100%,rgba(255,103,15,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, rgba(242,154,14,1) 0%,rgba(255,103,15,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, rgba(242,154,14,1) 0%,rgba(255,103,15,1) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top, rgba(242,154,14,1) 0%,rgba(255,103,15,1) 100%); /* IE10+ */
+			background: linear-gradient(top, rgba(242,154,14,1) 0%,rgba(255,103,15,1) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f29a0e', endColorstr='#ff670f',GradientType=0 ); /* IE6-9 */
+			background-repeat: no-repeat;
+			background-color:rgba(255,103,15,1);
+			background: url("http://mt.ecstaticblob.com/public/images/tex1b.png") rgba(255, 103, 15, 1);
+		}
+
+		.manager_view{
 			margin:100px auto;
-			padding:30px;
-			box-shadow:0px 0px 6px rgba(0,0,0,0.5);
-			font-family: 'Inder', sans-serif;
+			padding:50px 40px;
 			border-radius:2px;
-			
+			box-shadow:0px 0px 9px grey;
+			border:2px solid white;
+			background: rgb(242,249,254); /* Old browsers */
+			background: rgb(249,252,247); /* Old browsers */
+			background: -moz-linear-gradient(top, rgba(249,252,247,1) 0%, rgba(223,226,220,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(249,252,247,1)), color-stop(100%,rgba(223,226,220,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* IE10+ */
+			background: linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcf7', endColorstr='#dfe2dc',GradientType=0 ); /* IE6-9 */
+			width:550px;
 		}
 		
 		#add_key{
@@ -29,7 +50,7 @@
 		 
 		 input[type="text"]{
 		 	padding:2px;
-			font-family: 'Inder', sans-serif;
+			font-family: 'Ubuntu', sans-serif;
 			color:#333;
 			border:none;
 			box-shadow:1px 1px 1px rgba(0,0,0,0.2) inset;
@@ -63,21 +84,60 @@
 	</head>
 
 	<body>
-		<div id="manager_view" >
+		<div class="manager_view" >
 			<div id="add_key">
-				<div id="enter_and_check_api_key">
-					<h2 class="if_not_key" style="display:none">Enter your Api-key from <a href="#">xsite</a> to get started</h2>
-					<h2 class="if_key" style="display:none">Enter new Api-key</h2>
-					<input placeholder="Enter api key here..." type="text" id="add_api_key_input"/><br/>
-					<button id="check_apikey_button">Add api key</button>
+				<div>
+					<div id="enter_and_check_api_key">
+						<div class="register_login">
+							<a data-populate="attr:href:register_url">Register</a> or
+							<a data-populate="attr:href:login_url">Login</a> at 
+							<a data-populate="html:display_domain , attr:href:domain"></a>
+							to retrieve your Api-key.
+						</div>
+						<h2 class="if_not_key" style="display:none">Enter your Api-key below to start tracking</h2>
+						<h2 class="if_key" style="display:none">Enter new Api-key</h2>
+						<input placeholder="Enter api key here..." type="text" id="add_api_key_input"/><br/>
+						<button id="check_apikey_button">Add api key</button>
+					</div>
+				</div>
+				<div id="valid_api_key">
+					<span></span>
 				</div>
 			</div>
-			<div id="valid_api_key">
-				<span></span>
-			</div>
+		</div>
+		<div class="manager_view" >
+			<h2>Manga sites currently supported: </h2>
+			<ul>
+				<li>somemanga</li>
+				<li>mangareader</li>
+				<li>mangafox</li>
+				<li>mangahere</li>
+				<li>mangastream</li>
+				<li>mangable</li>
+			</ul>
 		</div>
 		
 		<script type="text/javascript">
+			
+			display_domain = "mt.ecstaticblob.com";
+			domain = "http://" + display_domain ;
+			register_url = domain + "/register";
+			login_url = domain + "/login";
+			check_apikey_url = domain + "/checkapikey";
+
+			$("*[data-populate]").each(function(a,b){
+				todo = $(b).attr("data-populate").split(/\b\s*,\s*\b/);
+				for(job in todo){
+					var args = todo[job].split(/\b\s*:\s*\b/);
+					var f = args.splice(0,1)[0];
+					if(args.length == 2){
+						$(b)[f](args[0],window[args[1]]);
+					}else{
+						$(b)[f](window[args[0]]);
+					}
+				}
+			});
+
 			if(localStorage["apikey"]){
 				$("#add_api_key_input").val(localStorage["apikey"])
 			}
@@ -101,13 +161,14 @@
 						
 			function check_api_key(key){
 				if(key){
-					$.post("http://localhost:9000/checkapikey", jQuery.param( {api_key:key} ),
+					key = key.replace(/\s/g,"")
+					$.post(check_apikey_url, jQuery.param( {api_key:key} ),
 				 		function(user){
 							if(!user.accepted && user.api_key == key){
 								window.accepted_user = user;
 								localStorage["apikey"] = user.api_key;
 								$("#enter_and_check_api_key").hide();
-								$("#valid_api_key span").html("Api key valid, thank you " + user.name + ", you can now start reading and tracking manga. click <a href='#' id='renew_api_key'> here </a>to add a new api key.");
+								$("#valid_api_key span").html("Api key valid, thank you " + user.name + ", you can now start reading and tracking manga. click <a href='#' id='renew_api_key'> here </a>to add a new api key." );
 							}else if(user.accepted == "false"){
 								$("#valid_api_key span").html("Api key not valid");
 							}

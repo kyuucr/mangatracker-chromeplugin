@@ -3,14 +3,22 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript">
 
+      display_domain = "mt.ecstaticblob.com";
+      domain = "http://" + display_domain ;
+      check_apikey_url = domain + "/checkapikey";
+      addManga_url = domain + "/addmanga";
+      myManga_url = domain + "/mymanga";
 
+function action(a){
+  return 
+}
 
 chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {
 	if(request.data["manga_name"] && request.data["chapter.issue"]){
 	console.log(request.data);
 		request.data["api_key"] = localStorage["apikey"];
 		if(localStorage["apikey"]){
-			$.post("http://localhost:9000/addmanga", jQuery.param( request.data ),
+			$.post(addManga_url, jQuery.param( request.data ),
 				function(data){
 					sendResponse({completed:true});
 					console.log(data);
@@ -43,11 +51,8 @@ function focusOrCreateTab(url) {
 }
 
 chrome.browserAction.onClicked.addListener(function(tab) {
-
-
-  var manager_url = chrome.extension.getURL("api-key.html");
-  
-  focusOrCreateTab(manager_url);
+  //var manager_url = chrome.extension.getURL("api-key.html");
+  focusOrCreateTab(myManga_url);
 });
 
 
