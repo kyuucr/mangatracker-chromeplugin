@@ -4,6 +4,7 @@
 <script type="text/javascript">
 
       display_domain = "mt.ecstaticblob.com";
+      //display_domain = "localhost:9000";
       domain = "http://" + display_domain ;
       check_apikey_url = domain + "/checkapikey";
       addManga_url = domain + "/addmanga";
@@ -14,18 +15,32 @@ function action(a){
 }
 
 chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {
-	if(request.data["manga_name"] && request.data["chapter.issue"]){
-	console.log(request.data);
-		request.data["api_key"] = localStorage["apikey"];
-		if(localStorage["apikey"]){
-			$.post(addManga_url, jQuery.param( request.data ),
-				function(data){
-					sendResponse({completed:true});
-					console.log(data);
-				}
-			, "json");
-		}
-	}
+
+  if(request.action == "add_manga"){
+  	if(request.data["manga_name"] && request.data["chapter.issue"]){
+  		request.data["api_key"] = localStorage["apikey"];
+  		if(localStorage["apikey"]){
+  			$.post(addManga_url, jQuery.param( request.data ),
+  				function(data){
+  					sendResponse({completed:true});
+  				}
+  			, "json");
+  		}
+  	}
+  }
+
+console.log(request);
+  if(request.action == "add_apikey"){
+    console.log(request)
+    $.post(check_apikey_url, jQuery.param( {api_key:request.data["key"]} ),
+      function(user){
+        console.log(user);
+        if(!user.accepted && user.api_key == request.data["key"]){
+          localStorage["apikey"] = user.api_key;
+          sendResponse({completed:true});
+        }
+      },"json");
+  }
 });
 
 

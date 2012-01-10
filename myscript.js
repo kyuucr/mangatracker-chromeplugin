@@ -1,3 +1,25 @@
+display_domain = "mt.ecstaticblob.com";
+//display_domain = "localhost:9000";
+domain = "http://" + display_domain + "/";
+check_apikey_url = domain + "checkapikey";
+addManga_url = domain + "addmanga";
+myManga_url = domain + "mymanga";
+
+if(window.location.href.search(new RegExp(domain+"$")) != -1){
+	$("#api_key").ready(function(){
+		chrome.extension.sendRequest({
+			action : "add_apikey",
+			data : {
+				"key": $("#api_key").val()
+			}
+		}, function(response) {
+			$("body").append("<div class='confirm_key'>Your Api_key was successfully added to your manga tracker Chrome plugin</div>")
+			$("<''>"confirm_key
+		});
+	});
+			
+}
+
 
 if(window.location.host.indexOf("somemanga") != -1){
 	$("head").ready(function(){
