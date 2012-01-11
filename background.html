@@ -11,6 +11,7 @@
       myManga_url = domain + "/mymanga";
 
 function action(a){
+
   return 
 }
 
@@ -29,18 +30,27 @@ chrome.extension.onRequest.addListener( function (request, sender, sendResponse)
   	}
   }
 
-console.log(request);
   if(request.action == "add_apikey"){
-    console.log(request)
+    if(request.data["force"] == false){
+        sessionStorage["dont_update_key"] = true;
+    }
+    if(!sessionStorage["dont_update_key"]){
     $.post(check_apikey_url, jQuery.param( {api_key:request.data["key"]} ),
       function(user){
-        console.log(user);
-        if(!user.accepted && user.api_key == request.data["key"]){
-          localStorage["apikey"] = user.api_key;
-          sendResponse({completed:true});
+        console.log(user)
+        if(!user.accepted){
+          if(!localStorage["apikey"] || request.data["force"]){
+            
+              localStorage["apikey"] = request.data["key"];
+        
+            sendResponse({done:true});
+          }else if(localStorage["apikey"] != request.data["key"]){
+            sendResponse({not_matching:true});
+          }
         }
       },"json");
   }
+}
 });
 
 

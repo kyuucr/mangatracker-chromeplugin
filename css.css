@@ -21,4 +21,32 @@
 	cursor:;
 }
 
+.confirm_wrapper{
+	position:fixed;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	background: url("http://mt.ecstaticblob.com/public/images/tex1b.png") rgb(0,0,0);
+	z-index:99999;
+}
+.confirm_key{
+	margin:100px auto;
+	padding:50px 40px;
+	border-radius:2px;
+	box-shadow:0px 0px 9px grey;
+	border:2px solid white;
+	background: rgb(242,249,254); /* Old browsers */
+	background: rgb(249,252,247); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(249,252,247,1) 0%, rgba(223,226,220,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(249,252,247,1)), color-stop(100%,rgba(223,226,220,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* IE10+ */
+	background: linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcf7', endColorstr='#dfe2dc',GradientType=0 ); /* IE6-9 */
+	width:550px;
+
+}
+
 

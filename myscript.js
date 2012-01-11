@@ -7,19 +7,34 @@ myManga_url = domain + "mymanga";
 
 if(window.location.href.search(new RegExp(domain+"$")) != -1){
 	$("#api_key").ready(function(){
-		chrome.extension.sendRequest({
-			action : "add_apikey",
-			data : {
-				"key": $("#api_key").val()
-			}
-		}, function(response) {
-			$("body").append("<div class='confirm_key'>Your Api_key was successfully added to your manga tracker Chrome plugin</div>")
-			$("<''>"confirm_key
-		});
-	});
-			
+		//if(!sessionStorage["dont_update_key"]){
+			sendKey($("#api_key").val(), null);
+		//}
+	});		
 }
 
+function sendKey(key, force){
+	chrome.extension.sendRequest({
+		action : "add_apikey",
+		data : {
+			"key": key,
+			"force": force
+		}
+	}, function(response) {
+		if(response.done){
+			var wrapper = $("<div class='confirm_wrapper'><div class='confirm_key'>Your Api_key was successfully added to your manga tracker Chrome plugin</div></div>").appendTo($("body"));
+		}
+
+		if(response.not_matching){
+			var wrapper = $("<div class='confirm_wrapper'><div class='confirm_key'>The user you have logged in with does not match the chrome plugin api key. Would you like to change the plugin apikey? <button class='change'>change api key</button><button class='leave'>Leave api key</button></div></div>").appendTo($("body"));
+			
+			wrapper.find(".change").click(function(){
+				sendKey($("#api_key").val(), true);
+				wrapper.remove();
+			});
+		}
+	});
+}
 
 if(window.location.host.indexOf("somemanga") != -1){
 	$("head").ready(function(){
