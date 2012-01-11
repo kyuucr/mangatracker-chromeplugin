@@ -27,7 +27,7 @@
 	bottom:0px;
 	left:0px;
 	right:0px;
-	background: url("http://mt.ecstaticblob.com/public/images/tex1b.png") rgb(0,0,0);
+	background: url("http://mt.ecstaticblob.com/public/images/tex1b.png") rgba(0,0,0,0.6);
 	z-index:99999;
 }
 .confirm_key{

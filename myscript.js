@@ -5,11 +5,11 @@ check_apikey_url = domain + "checkapikey";
 addManga_url = domain + "addmanga";
 myManga_url = domain + "mymanga";
 
+
+
 if(window.location.href.search(new RegExp(domain+"$")) != -1){
 	$("#api_key").ready(function(){
-		//if(!sessionStorage["dont_update_key"]){
-			sendKey($("#api_key").val(), null);
-		//}
+			sendKey($("#api_key").val(), false);
 	});		
 }
 
@@ -21,15 +21,23 @@ function sendKey(key, force){
 			"force": force
 		}
 	}, function(response) {
-		if(response.done){
-			var wrapper = $("<div class='confirm_wrapper'><div class='confirm_key'>Your Api_key was successfully added to your manga tracker Chrome plugin</div></div>").appendTo($("body"));
+		if(response.insync){
+			$(".status_api_key").remove();
+			$("<div class='tatus_api_key container_shape'><div class='c-ap'><h2>Your user account and chrome plugin are in sync</h2><p> you can start reading and tracking manga now</p></div></div>").insertAfter($(".quick_bar"));
 		}
 
-		if(response.not_matching){
-			var wrapper = $("<div class='confirm_wrapper'><div class='confirm_key'>The user you have logged in with does not match the chrome plugin api key. Would you like to change the plugin apikey? <button class='change'>change api key</button><button class='leave'>Leave api key</button></div></div>").appendTo($("body"));
+		if(!response.insync){
 			
+			$(".status_api_key").remove();
+			var wrapper = $("<div class='status_api_key container_shape'><div class='c-ap'><h2>Your user account and chrome plugin are NOT in sync</h2><p> Left as is, manga cannot be tracked on this account.<button class='change'>Add Apikey</button></p></div></div>").insertAfter($(".quick_bar"));
+		
 			wrapper.find(".change").click(function(){
 				sendKey($("#api_key").val(), true);
+				wrapper.remove();
+			});
+
+			wrapper.find(".leave").click(function(){
+				sendKey($("#api_key").val(), false);
 				wrapper.remove();
 			});
 		}
