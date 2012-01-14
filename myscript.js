@@ -19,7 +19,7 @@ if(host.match("somemanga")){
 		});
 	});	
 }
-	
+
 if(host.match("mangareader")){
 	jQuery("#mangainfo h1").ready(function(){
 		var matches = jQuery("#mangainfo h1").html().match(/^(.*)\s+([0-9]+)$/);
