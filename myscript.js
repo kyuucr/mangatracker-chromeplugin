@@ -1,9 +1,10 @@
 display_domain = "mt.ecstaticblob.com";
-//display_domain = "localhost:9000";
+//\\display_domain = "localhost:9000";
 domain = "http://" + display_domain + "/";
 check_apikey_url = domain + "checkapikey";
 addManga_url = domain + "addmanga";
 myManga_url = domain + "mymanga";
+domian_login = domain + "login";
 
 var host = window.location.host;
 
@@ -21,36 +22,39 @@ if(host.match("somemanga")){
 }
 
 if(host.match("mangareader")){
-	jQuery("#mangainfo h1").ready(function(){
-		var matches = jQuery("#mangainfo h1").html().match(/^(.*)\s+([0-9]+)$/);
-		if(matches.length == 3){
-			var manga = matches[1];
-			var issue = matches[2];
-			send(manga,issue);
-		}
+	jQuery("head script").ready(function(){			 
+		var buffer = $(jQuery("head script")[4]).text();
+		var manga = $("#mangainfo .c2 a").text().replace(/(\s)*Manga$/, '');
+		var chapter = buffer.match(/document\['chapterno'\]\s*=\s*([^;]*)/)[1];
+		send(manga,chapter);
 	})
 }
 
 if(host.match("mangafox")){
-	jQuery("#chnav h2").ready(function(){
-		var matches = jQuery("#chnav h2").html().match(/(.*)\s(\d+)/);
-		if(matches.length == 3){
-			var manga = matches[1];
-			var issue = matches[2];
-			send(manga,issue);
-		}
+	jQuery("body script").ready(function(){			 
+		var buffer = $(jQuery("body script")[3]).text();
+		var manga = $("#header .widepage .cl>a").text().replace(/\s*Manga$/, '');
+		var chapter = buffer.match(/current_chapter=\"(.*)\"/)[1].replace(/^[^\/]*\/*c(0){0,2}/,'');
+		//var volume  = (v = buffer.match(/current_chapter=\"v0*([^\/])\//)) && " -- v" + v[1] + " " || "";
+		send(manga,chapter);
 	})
 }
 
+//The location of the <Script> tag changed and there are spaces between the equals file
 if(host.match("mangahere")){
-	jQuery(".readpage_top").ready(function(){
-		var matches = jQuery(".readpage_top h1 a").html().match(/(.*)\s(\d+)/);
-		if(matches.length == 3){
-			var manga = matches[1];
-			var issue = matches[2];
-			send(manga,issue);
+	jQuery("#skyscraper").ready(function(){
+		var manga = $('.readpage_top .title h2 a').text().replace(/\s*Manga$/, '');
+		var scripts = $("body script");
+
+		for(var i = 0;i < scripts.length;i++){
+			var chapter = $(scripts[i]).text().match(/current_chapter\s*=\s*".*c[0]{0,2}(.*)"/);
+			if(chapter){
+				break;
+			}
 		}
-	})
+		
+ 		send(manga,chapter[1]);
+ 	});	
 }
 
 if(host.match("mangastream")){
@@ -66,7 +70,7 @@ if(host.match("mangastream")){
 
 if(host.match("mangable")){
 	jQuery("#select_page").ready(function(){
-		var matches = jQuery("#breadcrumbs li:last-child").text().match(/(.+)\sChapter\s(\d+)/);
+		var matches = jQuery("#breadcrumbs li:last-child").text().match(/(.+)\sChapter\s([^:]+)/);
 		if(matches.length == 3){
 			var manga = matches[1];
 			var issue = matches[2];
@@ -76,10 +80,16 @@ if(host.match("mangable")){
 }
 
 var href = window.location.href;
-if(href.match(new RegExp(domain +"$"))){
+if(href.match(new RegExp(domain +"[#]*$"))){
 	$("#api_key").ready(function(){
 		sendKey($("#api_key").val(), false);
 	});		
+}
+
+if(href.match(new RegExp(domian_login +"[#]*$"))){
+	$("#login_container").ready(function(){
+		$('#login_container').before("<div style='margin-bottom:10px;text-align:center;font-family:\"Ubuntu\",sans-serif;font-size:20px;'>Those of you who could not login I have sent you emails.<br/>If you did not receive an email or need more help you can email me aaron@aaron-m.co.nz</div>");
+	});
 }
 
 function sendKey(key, force){
@@ -92,14 +102,13 @@ function sendKey(key, force){
 	}, function(response) {
 		//key matches user account
 		if(response.insync){
-			$(".status_api_key").remove();
-			$("<div class='status_api_key container_shape'><div class='c-ap'><h2>Your user account and chrome plugin are in sync</h2><p> you can start reading and tracking manga now</p></div></div>").insertAfter($(".quick_bar"));
+			$(".sync_api_key").hide();
+			$("#response .insync").show();
 		}
 		//dosent match
 		if(!response.insync){
-			$(".status_api_key").remove();
-			var wrapper = $("<div class='status_api_key container_shape'><div class='c-ap'><h2>Your user account and chrome plugin are NOT in sync</h2><p> Left as is, manga cannot be tracked on this account.<button class='change'>Add Apikey</button></p></div></div>").insertAfter($(".quick_bar"));
-		
+			$(".sync_api_key").hide();domian_login
+			wrapper = $("#response .nosync").show();
 			wrapper.find(".change").click(function(){
 				sendKey($("#api_key").val(), true);
 			});

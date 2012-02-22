@@ -9,6 +9,7 @@
       check_apikey_url = domain + "/checkapikey";
       addManga_url = domain + "/addmanga";
       myManga_url = domain + "/mymanga";
+      get_shouts_url = domain + "/getshouts";
 
 
 chrome.extension.onRequest.addListener( function (request, sender, sendResponse) {
@@ -77,10 +78,32 @@ function focusOrCreateTab(url) {
   });
 }
 
-chrome.browserAction.onClicked.addListener(function(tab) {
+//chrome.browserAction.onClicked.addListener(function(tab) {
   //var manager_url = chrome.extension.getURL("api-key.html");
-  focusOrCreateTab(myManga_url);
-});
+  //focusOrCreateTab(domain);
+//});
+
+function check_new(){
+	
+	$.post(get_shouts_url,jQuery.param( {"api_key" : localStorage["apikey"]} ), function(posts){ 
+		var new_shouts = 0;
+		for(a = 0; a < posts.length; a++){
+			console.log("aa");
+			if(localStorage['lastViewied'] && new Date(posts[a].postedAt).getTime() > parseInt(localStorage['lastViewied'])) {
+				console.log("a");
+				new_shouts += 1;
+			}
+		}
+		if(new_shouts > 0){
+			chrome.browserAction.setBadgeText({text: new_shouts + ''});
+		} else {
+			chrome.browserAction.setBadgeText({text: ''});
+		}
+	},"json");
+}
+check_new();
+
+setInterval(check_new, 4000);
 
 
 </script>

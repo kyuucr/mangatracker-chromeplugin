@@ -1,0 +1,119 @@
+<html>
+<head> 
+<script type="text/javascript" src="jquery.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700italic' rel='stylesheet' type='text/css'></link>
+<link rel="stylesheet" media="screen" href="css.css">
+<script type="text/javascript">
+
+      display_domain = "mt.ecstaticblob.com";
+      //display_domain = "localhost:9000";
+      domain = "http://" + display_domain ;
+      check_apikey_url = domain + "/checkapikey";
+      get_shouts_url = domain + "/getshouts";
+      set_shout_url = domain + "/setshout";
+
+
+
+		if(localStorage["apikey"]) {
+			request.data["api_key"] = localStorage["apikey"];
+		$.post(addManga_url, jQuery.param( request.data ),
+			function(data){
+				sendResponse({completed:true});
+			}
+		, "json");
+		}
+
+
+
+
+function focusOrCreateTab(url) {
+  chrome.windows.getAll({"populate":true}, function(windows) {
+    var existing_tab = null;
+    for (var i in windows) {
+      var tabs = windows[i].tabs;
+      for (var j in tabs) {
+        var tab = tabs[j];
+        if (tab.url == url) {
+          existing_tab = tab;
+          break;
+        }
+      }
+    }
+    if (existing_tab) {
+      chrome.tabs.update(existing_tab.id, {"selected":true});
+    } else {
+      chrome.tabs.create({"url":url, "selected":true});
+    }
+  });
+}
+
+//chrome.browserAction.onClicked.addListener(function(tab) {
+  //var manager_url = chrome.extension.getURL("api-key.html");
+  //focusOrCreateTab(domain);
+//});
+
+
+</script>
+</head>
+
+<body class='trakk3r-l8n11-body-main'>
+	<a class='trakk3r-l8n11-gs_button trakk3r-l8n11-goto_link' href='http://mt.ecstaticblob.com/'>goto MangaTracker</a>
+	<div class="trakk3r-l8n11-shoutbox">
+	<input type='text' id="trakk3r-l8n11-body" /><button class='trakk3r-l8n11-shout'>shout</button>
+		<div class="trakk3r-l8n11-shoutbox-inner">
+			<div id="trakk3r-l8n11-posts">
+
+			</div>
+			
+		</div>
+		
+	</div>
+
+	<script type="text/javascript" >
+		
+		if(localStorage["apikey"]) {
+			$("#trakk3r-l8n11-body").bind("keyup",function(e){
+				if(e.which == 13){
+					$.post(set_shout_url, jQuery.param( {"api_key" : localStorage["apikey"], "message" : $(this).val() } ), function(hello){
+						$("#trakk3r-l8n11-body").val("");
+						renderPost(hello);
+						$("#trakk3r-l8n11-body").focus();
+					},"json");
+				}
+			});
+
+			$(".trakk3r-l8n11-shout").bind("click",function(e){
+				$.post(set_shout_url, jQuery.param( {"api_key" : localStorage["apikey"], "message" : $("#trakk3r-l8n11-body").val() } ), function(hello){
+					$("#trakk3r-l8n11-body").val("");  
+					renderPost(hello);
+					$("#trakk3r-l8n11-body").focus();
+				},"json");
+
+			});
+
+			function renderPost(post){
+				$("#trakk3r-l8n11-posts").prepend("<div class='trakk3r-l8n11-post' > " + post.body + "</div>"); 
+				localStorage['lastViewied'] =  new Date(post.postedAt).getTime() + '';
+			}
+
+			function get_all(){
+				$.post(get_shouts_url,jQuery.param( {"api_key" : localStorage["apikey"]} ), function(posts){ 
+					$(".trakk3r-l8n11-post").remove();
+					for(a = 0; a < posts.length; a++){
+						renderPost(posts[a]);
+					}
+				},"json");
+			}
+			get_all();
+
+			setInterval(get_all, 2000);
+		}
+
+		$('.trakk3r-l8n11-goto_link').bind('click', function(){
+			focusOrCreateTab('http://mt.ecstaticblob.com/');
+		});
+		
+	</script>
+</body>
+</html>
+

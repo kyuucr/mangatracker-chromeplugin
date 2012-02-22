@@ -1,3 +1,8 @@
+.trakk3r-l8n11-body-main {
+	font-family: 'Ubuntu', sans-serif;
+	background: url("http://mt.ecstaticblob.com/public/images/tex1b.png") rgba(255, 103, 15, 1);
+}
+
 #trakk3r-l8n11-menu{
 	position: absolute;
 	left:10px;
@@ -44,9 +49,119 @@
 	background: -o-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* Opera 11.10+ */
 	background: -ms-linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* IE10+ */
 	background: linear-gradient(top, rgba(249,252,247,1) 0%,rgba(223,226,220,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcf7', endColorstr='#dfe2dc',GradientType=0 ); /* IE6-9 */
 	width:550px;
 
 }
 
 
+.container_shape.status_api_key .c-ap {
+	float:none;
+}
+
+.trakk3r-l8n11-shoutbox{
+	text-align:left;
+	float:left;
+	background-color: rgba(255, 255, 255, 0.7);
+	padding:5px 0;
+	border-radius:0 0 10px 10px;
+	border:10px solid rgba(255, 255, 255, 0.7);
+    background: url("http://mt.ecstaticblob.com/public/images/tex1w.png") repeat scroll 0 0 white;
+    background-clip: padding-box;
+    z-index: 100000;
+    box-shadow:0 0px 5px #7F7F7F;
+    width:260px;
+    margin-bottom:10px;
+}
+.trakk3r-l8n11-shoutbox input {
+    width: 75%; 
+    display: inline-block; 
+    margin-top: 2px; 
+    margin-bottom: 2px;
+}
+
+.trakk3r-l8n11-shoutbox-inner{
+	max-height:200px;
+	overflow-y: scroll;
+	overflow-x:hidden;
+	
+
+}
+.trakk3r-l8n11-shoutbox-inner a{
+	text-decoration:underline;
+}
+
+.trakk3r-l8n11-open-shoutbox{
+	float:left;
+	
+}
+
+.trakk3r-l8n11-post:nth-child(even) {background-color: rgba(255, 255, 255, 0.7);}
+
+.trakk3r-l8n11-post.to_me{
+	background-color:#9BDDFF;
+}
+
+
+.trakk3r-l8n11-post{
+	padding:1px 0 1px;
+	border-bottom: 1px solid #CCC;
+}
+.trakk3r-l8n11-shout{
+
+}
+
+.trakk3r-l8n11-gs_button, .goto_button {
+
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border: 1px solid;
+	cursor: pointer;
+	color: white;
+	font-size: 20px;
+	text-decoration:none;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	text-transform: uppercase;
+	-webkit-box-shadow: 0 2px 0 0 rgba(255,255,255,.06) inset,0 2px 3px 0 rgba(0,0,0,.2);
+	-moz-box-shadow: 0 2px 0 0 rgba(255,255,255,.06) inset,0 2px 3px 0 rgba(0,0,0,.2);
+	box-shadow: 0 2px 0 0 rgba(255,255,255,.06) inset,0 2px 3px 0 rgba(0,0,0,.2);
+	outline: 0px;
+	border-image: initial;
+
+		cursor: pointer;
+	color: white;
+	font-size: 13px;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	text-transform: uppercase;
+
+	vertical-align: middle;
+	line-height: 16px;
+
+	border-color: #2D53AF;
+	background: #4D7BD6;
+	background: -moz-linear-gradient(top,#5689DB 0%,#4D7BD6 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#5689DB),color-stop(100%,#4D7BD6));
+	background: -webkit-linear-gradient(top,#5689DB 0%,#4D7BD6 100%);
+	background: -o-linear-gradient(top,#5689DB 0%,#4D7BD6 100%);
+	background: -ms-linear-gradient(top,#5689DB 0%,#4D7BD6 100%);
+	background: linear-gradient(top,#5689DB 0%,#4D7BD6 100%);
+
+	margin-bottom:5px;
+
+	height: 15px;
+	padding: 4px;
+	font-size: 11px;
+	display: block;
+}
+
+.trakk3r-l8n11-goto_button{
+	height: 44px;
+	font-size: 32px;
+	line-height: 44px;
+
+	display: block;
+}
