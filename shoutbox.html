@@ -5,47 +5,42 @@
 <link rel="stylesheet" media="screen" href="css.css">
 <script type="text/javascript">
 
-      display_domain = "mt.ecstaticblob.com";
-      //display_domain = "localhost:9000";
-      domain = "http://" + display_domain ;
-      check_apikey_url = domain + "/checkapikey";
-      get_shouts_url = domain + "/getshouts";
-      set_shout_url = domain + "/setshout";
+	display_domain = "mt.ecstaticblob.com";
+	//display_domain = "localhost:9000"; 
+	domain = "http://" + display_domain ;
+	check_apikey_url = domain + "/checkapikey";
+	get_shouts_url = domain + "/getshouts";
+	set_shout_url = domain + "/setshout";
 
-
-
-		if(localStorage["apikey"]) {
-			request.data["api_key"] = localStorage["apikey"];
-		$.post(addManga_url, jQuery.param( request.data ),
-			function(data){
-				sendResponse({completed:true});
-			}
-		, "json");
+	if(localStorage["apikey"]) {
+		request.data["api_key"] = localStorage["apikey"];
+	$.post(addManga_url, jQuery.param( request.data ),
+		function(data){
+			sendResponse({completed:true});
 		}
-
-
-
-
-function focusOrCreateTab(url) {
-  chrome.windows.getAll({"populate":true}, function(windows) {
-    var existing_tab = null;
-    for (var i in windows) {
-      var tabs = windows[i].tabs;
-      for (var j in tabs) {
-        var tab = tabs[j];
-        if (tab.url == url) {
-          existing_tab = tab;
-          break;
-        }
-      }
-    }
-    if (existing_tab) {
-      chrome.tabs.update(existing_tab.id, {"selected":true});
-    } else {
-      chrome.tabs.create({"url":url, "selected":true});
-    }
-  });
-}
+	, "json");
+	}
+	
+	function focusOrCreateTab(url) {
+		chrome.windows.getAll({"populate":true}, function(windows) {
+		    var existing_tab = null;
+		    for (var i in windows) {
+		      	var tabs = windows[i].tabs;
+		      	for (var j in tabs) {
+		        	var tab = tabs[j];
+		        	if (tab.url == url) {
+		         		existing_tab = tab;
+		          		break;
+		        	}
+		      	}
+		    }
+		    if (existing_tab) {
+		      	chrome.tabs.update(existing_tab.id, {"selected":true});
+		    } else {
+		      	chrome.tabs.create({"url":url, "selected":true});
+		    }
+	  	});
+	}
 
 //chrome.browserAction.onClicked.addListener(function(tab) {
   //var manager_url = chrome.extension.getURL("api-key.html");
@@ -84,7 +79,7 @@ function focusOrCreateTab(url) {
 
 			$(".trakk3r-l8n11-shout").bind("click",function(e){
 				$.post(set_shout_url, jQuery.param( {"api_key" : localStorage["apikey"], "message" : $("#trakk3r-l8n11-body").val() } ), function(hello){
-					$("#trakk3r-l8n11-body").val("");  
+					$("#trakk3r-l8n11-body").val(""); 
 					renderPost(hello);
 					$("#trakk3r-l8n11-body").focus();
 				},"json");

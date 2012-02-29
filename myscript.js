@@ -1,5 +1,5 @@
 display_domain = "mt.ecstaticblob.com";
-//\\display_domain = "localhost:9000";
+//display_domain = "localhost:9000";
 domain = "http://" + display_domain + "/";
 check_apikey_url = domain + "checkapikey";
 addManga_url = domain + "addmanga";
@@ -31,11 +31,15 @@ if(host.match("mangareader")){
 }
 
 if(host.match("mangafox")){
-	jQuery("body script").ready(function(){			 
-		var buffer = $(jQuery("body script")[3]).text();
+	jQuery("body script").ready(function(){
 		var manga = $("#header .widepage .cl>a").text().replace(/\s*Manga$/, '');
-		var chapter = buffer.match(/current_chapter=\"(.*)\"/)[1].replace(/^[^\/]*\/*c(0){0,2}/,'');
-		//var volume  = (v = buffer.match(/current_chapter=\"v0*([^\/])\//)) && " -- v" + v[1] + " " || "";
+		var scripts = $("body script");
+		for(var i = 0;i < scripts.length;i++){
+			var chapter = $(scripts[i]).text().match(/current_chapter\s*=\s*".*c[0]{0,2}(.*)"/)[1];
+			if(chapter){
+				break;
+			}
+		}
 		send(manga,chapter);
 	})
 }
@@ -84,12 +88,6 @@ if(href.match(new RegExp(domain +"[#]*$"))){
 	$("#api_key").ready(function(){
 		sendKey($("#api_key").val(), false);
 	});		
-}
-
-if(href.match(new RegExp(domian_login +"[#]*$"))){
-	$("#login_container").ready(function(){
-		$('#login_container').before("<div style='margin-bottom:10px;text-align:center;font-family:\"Ubuntu\",sans-serif;font-size:20px;'>Those of you who could not login I have sent you emails.<br/>If you did not receive an email or need more help you can email me aaron@aaron-m.co.nz</div>");
-	});
 }
 
 function sendKey(key, force){

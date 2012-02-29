@@ -88,16 +88,19 @@ function check_new(){
 	$.post(get_shouts_url,jQuery.param( {"api_key" : localStorage["apikey"]} ), function(posts){ 
 		var new_shouts = 0;
 		for(a = 0; a < posts.length; a++){
-			console.log("aa");
 			if(localStorage['lastViewied'] && new Date(posts[a].postedAt).getTime() > parseInt(localStorage['lastViewied'])) {
 				console.log("a");
 				new_shouts += 1;
 			}
 		}
 		if(new_shouts > 0){
-			chrome.browserAction.setBadgeText({text: new_shouts + ''});
+			chrome.browserAction.setIcon({
+  				path:chrome.extension.getURL("icon19m.png")	
+			});
 		} else {
-			chrome.browserAction.setBadgeText({text: ''});
+			chrome.browserAction.setIcon({
+  				path:chrome.extension.getURL("/icon19.png")	
+			});
 		}
 	},"json");
 }
