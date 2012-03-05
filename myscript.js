@@ -8,7 +8,7 @@ domian_login = domain + "login";
 
 var host = window.location.host;
 
-if(host.match("somemanga")){
+/*if(host.match("somemanga")){
 	$("body").ready(function(){
 		$("script").each(function(index,element){
 			if($(this).text().indexOf("manga_name=") > -1){
@@ -81,7 +81,7 @@ if(host.match("mangable")){
 			send(manga,issue);
 		}
 	})
-}
+}*/
 
 var href = window.location.href;
 if(href.match(new RegExp(domain +"[#]*$"))){
@@ -129,3 +129,7 @@ function send(manga,issue){
 		});
 	}
 }
+
+chrome.extension.sendRequest({action : "get_script", data: host}, function (response) {
+	eval(response.data);
+});

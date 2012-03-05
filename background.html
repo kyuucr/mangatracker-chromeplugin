@@ -16,7 +16,7 @@ chrome.extension.onRequest.addListener( function (request, sender, sendResponse)
 
   	switch (request.action) {
 
-   	case "add_manga": {
+		case "add_manga": {
 
 	    	if(request.data["manga_name"] && request.data["chapter.issue"]){
 	    		if(localStorage["apikey"]) {
@@ -29,7 +29,7 @@ chrome.extension.onRequest.addListener( function (request, sender, sendResponse)
 	    		}
 	    	}
 
-	      break;
+			break;
 	   }
   
 		case "add_apikey": {
@@ -48,9 +48,16 @@ chrome.extension.onRequest.addListener( function (request, sender, sendResponse)
 				}
 
 			},"json");
+			
+			break;
+		}
+		
+		case "get_script": {
 
-
-
+			$.get(chrome.extension.getURL("scripts/" + request.data + ".js"), function (scriptData) {
+				sendResponse({data: scriptData});
+			});
+			
 			break;
 		}
 	}
